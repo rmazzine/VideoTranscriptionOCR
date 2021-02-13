@@ -1,0 +1,6 @@
+Flask==1.1.2
+Flask-RESTful==0.3.8
+gunicorn==20.0.4
+requests==2.25.1
+opencv-python==4.5.1.48
+moviepy==1.0.3
