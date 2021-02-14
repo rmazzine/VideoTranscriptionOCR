@@ -22,6 +22,20 @@ Start Flask server (e.g. http://localhost:3860)
 flask run -h localhost -p 3680
 ```
 
+## Create docker image
+To create a docker image, build it with:
+
+```commandline
+docker build -t videotranscriptionocr .
+```
+
+Then run it port-forwarding the required port
+```commandline
+docker run -p 3680:3680 -e TIKA_SERVER="TIKA_SERVER_HOST" \
+ -e TRANSCRIBE_SERVER="TRANSCRIPTION_SERVER_HOST" \
+--network="host" videotranscriptionocr
+```
+
 ## How to use
 For testing, it's  recommended to use an API tool like [Postman](https://www.postman.com/downloads/).
 
