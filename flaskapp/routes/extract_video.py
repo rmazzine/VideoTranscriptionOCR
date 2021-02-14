@@ -20,6 +20,9 @@ class ExtractVideo(Resource):
 
     def post(self):
         args = request.get_json()
+        video_name = ''
+        fr_file_names = []
+        removed_fr = []
 
         try:
             # Get base64 encoded video data
@@ -59,9 +62,9 @@ class ExtractVideo(Resource):
                     last_text_ocr = text
 
                 os.remove(fr_fn)
+                removed_fr.append(fr_fn)
 
             # Audio transcription
-
             response = requests.post(f'{transcribeserver}/transcribe', json={'data': audiob64},
                                      headers={'Content-Type': 'application/json'})
 
@@ -75,5 +78,11 @@ class ExtractVideo(Resource):
                 'audiob64': audiob64}}
 
         except Exception as e:
+
+            if video_name != '':
+                os.remove(video_name)
+            for fr_fn in list(set(fr_file_names)-set(removed_fr)):
+                os.remove(fr_fn)
+
             print(e)
             return {'code': 500, 'data': ''}

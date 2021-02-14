@@ -12,8 +12,6 @@ def frame_extraction(video_name):
 
     fr = vidcap.get(cv2.CAP_PROP_FPS)
 
-    print(fr)
-
     success, image = vidcap.read()
     count = 0
 
