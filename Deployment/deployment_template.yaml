@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: videotranscriptionocr-v${VERSION}
+  labels:
+    app: videotranscriptionocr
+    version: v${VERSION}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: videotranscriptionocr
+  template:
+    metadata:
+      labels:
+        app: videotranscriptionocr
+    spec:
+      containers:
+      - name: videotranscriptionocr
+        env:
+          - name: TIKA_SERVER
+            value: ${TIKA_SERVER}
+          - name: TRANSCRIBE_SERVER
+            value: ${TRANSCRIBE_SERVER}
+        image: ${DOCKER_HUB_ADDRESS}:videotranscriptionocr${VERSION}
+        ports:
+        - containerPort: 3680
+      imagePullSecrets:
+      - name: regcred
